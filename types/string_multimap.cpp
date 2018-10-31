@@ -238,7 +238,7 @@ cell_t sm_BuildStringMultiMapIterator(IPluginContext *pContext, const cell_t *pa
 		return pContext->ThrowNativeError("Invalid StringMultiMap handle %x (error %d)", hndl, err);
 	}
 	
-	StringMultiMapIterator *pIter = new StringMultiMapIterator(pMultiMap->begin(),
+	StringMultiMapIterator *pIter = new StringMultiMapIterator(pMultiMap, pMultiMap->begin(),
 			pMultiMap->end());
 	
 	return g_pHandleSys->CreateHandle(g_StringMultiMapIteratorType, pIter,
@@ -259,7 +259,7 @@ cell_t sm_BuildStringMultiMapKeyIterator(IPluginContext *pContext, const cell_t 
 	pContext->LocalToString(params[2], &key);
 	
 	auto range = pMultiMap->equal_range(key);
-	StringMultiMapIterator *pIter = new StringMultiMapIterator(range.first, range.second);
+	StringMultiMapIterator *pIter = new StringMultiMapIterator(pMultiMap, range.first, range.second);
 	
 	return g_pHandleSys->CreateHandle(g_StringMultiMapIteratorType, pIter,
 			pContext->GetIdentity(), myself->GetIdentity(), NULL);
@@ -428,6 +428,21 @@ cell_t sm_SetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t 
 	}
 	
 	pMultiMapIter->Current()->second = val;
+	
+	return 0;
+}
+
+/* native void StringMultiMapIterator.Erase(); */
+cell_t sm_RemoveOnStringMultiMapIterator(IPluginContext *pContext, const cell_t *params) {
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	
+	StringMultiMapIterator *pMultiMapIter;
+	HandleError err;
+	if ((err = ReadStringMultiMapIterHandle(hndl, &pMultiMapIter)) != HandleError_None) {
+		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
+	}
+	
+	pMultiMapIter->MarkRemoved();
 	
 	return 0;
 }

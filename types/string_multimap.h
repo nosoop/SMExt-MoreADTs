@@ -33,6 +33,7 @@ cell_t sm_GetStringMultiMapIteratorValue(IPluginContext *pContext, const cell_t 
 cell_t sm_SetStringMultiMapIteratorValue(IPluginContext *pContext, const cell_t *params);
 cell_t sm_GetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t *params);
 cell_t sm_SetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t *params);
+cell_t sm_RemoveOnStringMultiMapIterator(IPluginContext *pContext, const cell_t *params);
 
 
 const sp_nativeinfo_t g_StringMultiMapNatives[] = {
@@ -59,6 +60,8 @@ const sp_nativeinfo_t g_StringMultiMapNatives[] = {
 	{ "StringMultiMapIterator.SetValue", sm_SetStringMultiMapIteratorValue },
 	{ "StringMultiMapIterator.GetArray", sm_GetStringMultiMapIteratorArray },
 	{ "StringMultiMapIterator.SetArray", sm_SetStringMultiMapIteratorArray },
+	
+	{ "StringMultiMapIterator.Remove", sm_RemoveOnStringMultiMapIterator },
 	
 	{NULL, NULL},
 };
