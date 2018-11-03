@@ -130,7 +130,10 @@ cell_t sm_GetStringMultiMapString(IPluginContext *pContext, const cell_t *params
 			cell_t *pWritten;
 			pContext->LocalToPhysAddr(params[5], &pWritten);
 			
-			*pWritten = pContext->StringToLocal(params[3], params[4], pval->c_str());
+			size_t numBytes;
+			pContext->StringToLocalUTF8(params[3], params[4], pval->c_str(), &numBytes);
+			
+			*pWritten = numBytes;
 			
 			return true;
 		}
