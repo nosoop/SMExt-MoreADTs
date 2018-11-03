@@ -127,17 +127,10 @@ cell_t sm_GetStringMultiMapString(IPluginContext *pContext, const cell_t *params
 	auto result = pMultiMap->find(std::string(key));
 	if (result != pMultiMap->end()) {
 		if (auto pval = mpark::get_if<std::string>(&result->second)) {
-			char* val;
-			pContext->LocalToString(params[3], &val);
-			
-			size_t len = params[4];
-			
-			memmove(val, pval->c_str(), len);
-			
 			cell_t *pWritten;
 			pContext->LocalToPhysAddr(params[5], &pWritten);
 			
-			*pWritten = strlen(val);
+			*pWritten = pContext->StringToLocal(params[3], params[4], pval->c_str());
 			
 			return true;
 		}
@@ -288,11 +281,7 @@ cell_t sm_GetStringMultiMapIteratorKey(IPluginContext *pContext, const cell_t *p
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
-	char *key;
-	pContext->LocalToString(params[2], &key);
-	
-	size_t len = params[3];
-	memmove(key, pMultiMapIter->Current()->first.c_str(), len);
+	pContext->StringToLocal(params[2], params[3], pMultiMapIter->Current()->first.c_str());
 	
 	return 0;
 }
@@ -308,12 +297,7 @@ cell_t sm_GetStringMultiMapIteratorString(IPluginContext *pContext, const cell_t
 	}
 	
 	if (auto pval = mpark::get_if<std::string>(&pMultiMapIter->Current()->second)) {
-		char* val;
-		pContext->LocalToString(params[2], &val);
-		
-		size_t len = params[3];
-		
-		memmove(val, pval->c_str(), len);
+		pContext->StringToLocal(params[2], params[3], pval->c_str());
 		return true;
 	}
 	
