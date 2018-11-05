@@ -284,6 +284,10 @@ cell_t sm_GetStringMultiMapIteratorKey(IPluginContext *pContext, const cell_t *p
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use getter on removed entry in StringMultiMapIterator handle %x", hndl);
+	}
+	
 	pContext->StringToLocal(params[2], params[3], pMultiMapIter->Current()->first.c_str());
 	
 	return 0;
@@ -297,6 +301,10 @@ cell_t sm_GetStringMultiMapIteratorString(IPluginContext *pContext, const cell_t
 	HandleError err;
 	if ((err = ReadStringMultiMapIterHandle(hndl, &pMultiMapIter)) != HandleError_None) {
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
+	}
+	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use getter on removed entry in StringMultiMapIterator handle %x", hndl);
 	}
 	
 	if (auto pval = mpark::get_if<std::string>(&pMultiMapIter->Current()->second)) {
@@ -317,6 +325,10 @@ cell_t sm_SetStringMultiMapIteratorString(IPluginContext *pContext, const cell_t
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use getter on removed entry in StringMultiMapIterator handle %x", hndl);
+	}
+	
 	char* val;
 	pContext->LocalToString(params[2], &val);
 	
@@ -333,6 +345,10 @@ cell_t sm_GetStringMultiMapIteratorValue(IPluginContext *pContext, const cell_t 
 	HandleError err;
 	if ((err = ReadStringMultiMapIterHandle(hndl, &pMultiMapIter)) != HandleError_None) {
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
+	}
+	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use getter on removed entry in StringMultiMapIterator handle %x", hndl);
 	}
 	
 	if (auto pval = mpark::get_if<cell_t>(&pMultiMapIter->Current()->second)) {
@@ -356,6 +372,10 @@ cell_t sm_SetStringMultiMapIteratorValue(IPluginContext *pContext, const cell_t 
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use setter on removed entry in StringMultiMapIterator handle %x", hndl);
+	}
+	
 	cell_t val = params[2];
 	
 	pMultiMapIter->Current()->second = val;
@@ -371,6 +391,10 @@ cell_t sm_GetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t 
 	HandleError err;
 	if ((err = ReadStringMultiMapIterHandle(hndl, &pMultiMapIter)) != HandleError_None) {
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
+	}
+	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use getter on removed entry in StringMultiMapIterator handle %x", hndl);
 	}
 	
 	if (auto pval = mpark::get_if<std::vector<cell_t>>(&pMultiMapIter->Current()->second)) {
@@ -404,6 +428,10 @@ cell_t sm_SetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t 
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
+	if (pMultiMapIter->IsRemoved()) {
+		return pContext->ThrowNativeError("Can't use setter on removed entry in StringMultiMapIterator handle %x", hndl);
+	}
+	
 	cell_t* array;
 	pContext->LocalToPhysAddr(params[2], &array);
 	
@@ -429,7 +457,7 @@ cell_t sm_RemoveOnStringMultiMapIterator(IPluginContext *pContext, const cell_t 
 		return pContext->ThrowNativeError("Invalid StringMultiMapIterator handle %x (error %d)", hndl, err);
 	}
 	
-	pMultiMapIter->MarkRemoved();
+	pMultiMapIter->Remove();
 	
 	return 0;
 }

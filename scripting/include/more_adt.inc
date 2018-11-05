@@ -60,8 +60,9 @@ methodmap StringMultiMapIterator < Handle {
 	public native void SetArray(const any[] array, int num_items);
 	
 	/**
-	 * Marks the element at the current iterator position as removed.
-	 * The entry will be removed on the next invocation of Next().
+	 * Removes the entry at the current iterator position.  The iterator is not advanced.
+	 * Attempts to call getters / setters on a removed entry will throw an error.
+	 * Subsequent calls to `Remove()` on the same entry will not throw any error.
 	 */
 	public native void Remove();
 }

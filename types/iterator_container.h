@@ -7,20 +7,28 @@ template <typename T>
 class IteratorContainer {
 	public:
 	IteratorContainer(T* source, typename T::iterator begin, typename T::iterator end):
-			_struct(source), _it(begin), _end(end), _removed(false) {};
+			_struct(source), _it(begin), _end(end), _current_removed(false) {};
 	
 	bool Next() {
-		// TODO implement a way to mark the current entry as deleted
-		if (_removed) {
-			_struct->erase(_current);
-			_removed = false;
+		if (_current != _end) {
+			// _current is assigned before _it advances
+			_current = _it++;
+			_current_removed = false;
+			
+			return _current != _end;
 		}
-		_current = _it;
-		return _it++ != _end;
+		return false;
 	}
 	
-	void MarkRemoved() {
-		_removed = true;
+	void Remove() {
+		if (!_current_removed) {
+			_current_removed = true;
+			_struct->erase(_current);
+		}
+	}
+	
+	bool IsRemoved() {
+		return _current_removed;
 	}
 	
 	typename T::iterator Current() {
@@ -30,5 +38,5 @@ class IteratorContainer {
 	private:
 	T* _struct;
 	typename T::iterator _current, _it, _end;
-	bool _removed;
+	bool _current_removed;
 };
