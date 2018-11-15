@@ -81,6 +81,19 @@ cell_t sm_ClearStringMultiMap(IPluginContext *pContext, const cell_t *params) {
 	return 0;
 }
 
+/* native void StringMultiMap.Size.get; */
+cell_t sm_GetStringMultiMapSize(IPluginContext *pContext, const cell_t *params) {
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	
+	StringMultiMap *pMultiMap;
+	HandleError err;
+	if ((err = ReadStringMultiMapHandle(hndl, &pMultiMap)) != HandleError_None) {
+		return pContext->ThrowNativeError("Invalid StringMultiMap handle %x (error %d)", hndl, err);
+	}
+	
+	return pMultiMap->size();
+}
+
 /* native bool StringMultiMap.GetValue(const char[] key, any &value); */
 cell_t sm_GetStringMultiMapValue(IPluginContext *pContext, const cell_t *params) {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);

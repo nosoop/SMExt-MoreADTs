@@ -130,6 +130,13 @@ methodmap StringMultiMap < Handle {
 	 * Returns an iterator for elements matching a specific key.
 	 */
 	public native StringMultiMapIterator GetKeyIterator(const char[] key);
+	
+	/**
+	 * Returns the number of elements in the multimap.
+	 */
+	property int Size {
+		public native get();
+	}
 }
 
 public Extension __ext_madt = {
