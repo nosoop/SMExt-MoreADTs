@@ -10,8 +10,8 @@ class IteratorContainer {
 			_struct(source), _it(begin), _end(end), _current_removed(false) {};
 	
 	bool Next() {
-		if (_current != _end) {
-			// _current is assigned before _it advances
+		// no point advancing the iterator if it's at the end
+		if (_it != _end && _current != _end) {
 			_current = _it++;
 			_current_removed = false;
 			
