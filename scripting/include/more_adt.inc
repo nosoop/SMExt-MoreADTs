@@ -83,6 +83,11 @@ methodmap StringMultiMap < Handle {
 	public native void Remove(const char[] key);
 	
 	/**
+	 * Clears all entries from the multimap.
+	 */
+	public native void Clear();
+	
+	/**
 	 * Adds a new value with the specified `key`.
 	 */
 	public native void AddValue(const char[] key, any value);

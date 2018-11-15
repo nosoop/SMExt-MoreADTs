@@ -11,6 +11,7 @@ extern HandleType_t g_StringMultiMapIteratorType;
 cell_t sm_CreateStringMultiMap(IPluginContext *pContext, const cell_t *params);
 
 cell_t sm_RemoveStringMultiMapEntry(IPluginContext *pContext, const cell_t *params);
+cell_t sm_ClearStringMultiMap(IPluginContext *pContext, const cell_t *params);
 
 cell_t sm_GetStringMultiMapValue(IPluginContext *pContext, const cell_t *params);
 cell_t sm_AddStringMultiMapValue(IPluginContext *pContext, const cell_t *params);
@@ -40,6 +41,8 @@ const sp_nativeinfo_t g_StringMultiMapNatives[] = {
 	{ "StringMultiMap.StringMultiMap", sm_CreateStringMultiMap },
 	
 	{ "StringMultiMap.Remove", sm_RemoveStringMultiMapEntry },
+	{ "StringMultiMap.Clear", sm_ClearStringMultiMap },
+	
 	{ "StringMultiMap.GetValue", sm_GetStringMultiMapValue },
 	{ "StringMultiMap.AddValue", sm_AddStringMultiMapValue },
 	

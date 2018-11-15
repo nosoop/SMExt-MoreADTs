@@ -50,6 +50,7 @@ cell_t sm_CreateStringMultiMap(IPluginContext *pContext, const cell_t *params) {
 			pContext->GetIdentity(), myself->GetIdentity(), NULL);
 }
 
+/* native void StringMultiMap.Remove(const char[] key); */
 cell_t sm_RemoveStringMultiMapEntry(IPluginContext *pContext, const cell_t *params) {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
 	
@@ -64,6 +65,20 @@ cell_t sm_RemoveStringMultiMapEntry(IPluginContext *pContext, const cell_t *para
 	
 	pMultiMap->erase(key);
 	return false;
+}
+
+/* native void StringMultiMap.Clear(); */
+cell_t sm_ClearStringMultiMap(IPluginContext *pContext, const cell_t *params) {
+	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	
+	StringMultiMap *pMultiMap;
+	HandleError err;
+	if ((err = ReadStringMultiMapHandle(hndl, &pMultiMap)) != HandleError_None) {
+		return pContext->ThrowNativeError("Invalid StringMultiMap handle %x (error %d)", hndl, err);
+	}
+	
+	pMultiMap->clear();
+	return 0;
 }
 
 /* native bool StringMultiMap.GetValue(const char[] key, any &value); */
