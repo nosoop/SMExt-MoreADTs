@@ -244,9 +244,7 @@ cell_t sm_AddStringMultiMapArray(IPluginContext *pContext, const cell_t *params)
 	size_t array_len = params[4];
 	
 	std::vector<cell_t> val;
-	for (cell_t i = 0; i < array_len; i++) {
-		val.push_back(array[i]);
-	}
+	val.assign(array, array + array_len);
 	
 	pMultiMap->insert(StringMultiMap::value_type(std::string(key), val));
 	return 0;
@@ -466,9 +464,7 @@ cell_t sm_SetStringMultiMapIteratorArray(IPluginContext *pContext, const cell_t 
 	size_t array_len = params[3];
 	
 	std::vector<cell_t> val;
-	for (cell_t i = 0; i < array_len; i++) {
-		val.push_back(array[i]);
-	}
+	val.assign(array, array + array_len);
 	
 	pMultiMapIter->Current()->second = val;
 	

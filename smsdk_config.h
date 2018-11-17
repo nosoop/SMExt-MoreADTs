@@ -40,7 +40,7 @@
 /* Basic information exposed publicly */
 #define SMEXT_CONF_NAME			"More ADTs"
 #define SMEXT_CONF_DESCRIPTION	"Provides additional data structures to SourceMod."
-#define SMEXT_CONF_VERSION		"0.1.9"
+#define SMEXT_CONF_VERSION		"0.1.10"
 #define SMEXT_CONF_AUTHOR		"nosoop"
 #define SMEXT_CONF_URL			"http://github.com/nosoop/SMExt-MoreADTs"
 #define SMEXT_CONF_LOGTAG		"mADT"
