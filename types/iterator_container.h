@@ -7,7 +7,7 @@ template <typename T>
 class IteratorContainer {
 	public:
 	IteratorContainer(T* source, typename T::iterator begin, typename T::iterator end):
-			_struct(source), _it(begin), _end(end), _current_removed(false) {};
+			_struct(source), _current(begin), _it(begin), _end(end), _current_removed(false) {};
 	
 	bool Next() {
 		// no point advancing the iterator if it's at the end
