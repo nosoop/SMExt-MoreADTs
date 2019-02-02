@@ -135,7 +135,7 @@ cell_t sm_AddStringMultiMapValue(IPluginContext *pContext, const cell_t *params)
 	
 	cell_t val = params[3];
 	
-	pMultiMap->insert(StringMultiMap::value_type(std::string(key), val));
+	pMultiMap->emplace(key, val);
 	return 0;
 }
 
@@ -185,7 +185,7 @@ cell_t sm_AddStringMultiMapString(IPluginContext *pContext, const cell_t *params
 	char* val;
 	pContext->LocalToString(params[3], &val);
 	
-	pMultiMap->insert(StringMultiMap::value_type(std::string(key), val));
+	pMultiMap->emplace(key, val);
 	return 0;
 }
 
@@ -246,7 +246,7 @@ cell_t sm_AddStringMultiMapArray(IPluginContext *pContext, const cell_t *params)
 	std::vector<cell_t> val;
 	val.assign(array, array + array_len);
 	
-	pMultiMap->insert(StringMultiMap::value_type(std::string(key), val));
+	pMultiMap->emplace(key, val);
 	return 0;
 }
 
