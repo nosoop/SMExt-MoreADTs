@@ -65,7 +65,7 @@ methodmap StringMultiMapIterator < Handle {
 	 * Subsequent calls to `Remove()` on the same entry will not throw any error.
 	 */
 	public native void Remove();
-}
+};
 
 /**
  * Creates a multimap.  A multimap is a container that can map keys to arbitrary values.
@@ -137,7 +137,7 @@ methodmap StringMultiMap < Handle {
 	property int Size {
 		public native get();
 	}
-}
+};
 
 public Extension __ext_madt = {
 	name = "More ADTs",
